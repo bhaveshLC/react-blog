@@ -1,4 +1,3 @@
-import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.tsx";
@@ -11,8 +10,6 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import Home from "./Pages/Home/Home.tsx";
-import About from "./Components/About/About.tsx";
-import Contact from "./Components/Contact/Contact.tsx";
 import Login from "./Pages/Auth/Login/Login.tsx";
 import Signup from "./Pages/Auth/Sign-up/Signup.tsx";
 import Posts from "./Pages/Posts/Posts.tsx";

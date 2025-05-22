@@ -1,4 +1,4 @@
-import React, { forwardRef, useId } from "react";
+import { forwardRef, useId } from "react";
 
 const Select = forwardRef<any, any>(
   ({ label, className = "", options, onChange, ...props }, ref) => {

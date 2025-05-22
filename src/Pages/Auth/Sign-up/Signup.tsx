@@ -1,11 +1,8 @@
-import React from "react";
 import { useForm } from "react-hook-form";
 import Button from "../../../Components/Custom/Button/Button";
 import Input from "../../../Components/Custom/Input/Input";
 import authService from "../../../appWrite/auth";
-import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { login } from "../../../store/authSlice";
 import { notify } from "../../../config/Toast";
 
 const Signup = () => {
@@ -14,7 +11,6 @@ const Signup = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const onSignup = async (data: any) => {
     try {

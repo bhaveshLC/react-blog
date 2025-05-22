@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import service from "../../appWrite/service";
 import PostCard from "../../Components/postCard";
 import Pagination from "../../Components/Pagination/Pagination";

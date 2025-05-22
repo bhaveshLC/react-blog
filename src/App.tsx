@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import authService from "./appWrite/auth";
 import { login, logout } from "./store/authSlice";
 import { Footer, Header } from "./Components";
@@ -21,7 +21,9 @@ function App() {
           dispatch(logout());
         }
       })
-      .catch((err) => {})
+      .catch((err) => {
+        console.log(err);
+      })
       .finally(() => setLoading(false));
   }, []);
 

@@ -1,4 +1,3 @@
-import React from "react";
 import Button from "../Custom/Button/Button";
 import { useDispatch } from "react-redux";
 import { setPage } from "../../store/filterSlice";

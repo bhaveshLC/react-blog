@@ -2,7 +2,6 @@ import { Link, NavLink } from "react-router-dom";
 import LogoutBtn from "./LogoutBtn";
 import { useSelector } from "react-redux";
 import ThemeBtn from "../Custom/ToggleBtn";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 
 const Header = () => {
   const isLoggedIn = useSelector((state: any) => state.auth.status);
