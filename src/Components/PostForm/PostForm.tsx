@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -7,6 +7,7 @@ import Input from "../Custom/Input/Input";
 import RTE from "../RTE";
 import Select from "../Custom/Select/Select";
 import Button from "../Custom/Button/Button";
+import { notify } from "../../config/Toast";
 
 export default function PostForm({ post }: any) {
   const { register, handleSubmit, watch, setValue, control, getValues } =
@@ -21,7 +22,7 @@ export default function PostForm({ post }: any) {
     });
 
   const navigate = useNavigate();
-  const userData = useSelector((state: any) => state.userData);
+  const userData = useSelector((state: any) => state.auth.user);
 
   const submit = async (data: any) => {
     if (post) {
@@ -53,13 +54,14 @@ export default function PostForm({ post }: any) {
         });
 
         if (dbPost) {
+          notify("success", "Post Created Successfully");
           navigate(`/post/${dbPost.$id}`);
         }
       }
     }
   };
 
-  const slugTransform = useCallback((value: string) => {
+  const slugTransform = useCallback((value: any) => {
     if (value && typeof value === "string")
       return value
         .trim()
@@ -70,7 +72,9 @@ export default function PostForm({ post }: any) {
     return "";
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
+    console.log(userData);
+
     const subscription = watch((value, { name }) => {
       if (name === "title") {
         setValue("slug", slugTransform(value.title), { shouldValidate: true });
@@ -81,8 +85,11 @@ export default function PostForm({ post }: any) {
   }, [watch, slugTransform, setValue]);
 
   return (
-    <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
-      <div className="w-2/3 px-2">
+    <form
+      onSubmit={handleSubmit(submit)}
+      className="flex flex-wrap dark:bg-gray-800 min-h-screen"
+    >
+      <div className="w-2/3 p-2 rounded-md ">
         <Input
           label="Title :"
           placeholder="Title"
@@ -107,7 +114,7 @@ export default function PostForm({ post }: any) {
           defaultValue={getValues("content")}
         />
       </div>
-      <div className="w-1/3 px-2">
+      <div className="w-1/3 px-2 pt-2 ">
         <Input
           label="Featured Image :"
           type="file"

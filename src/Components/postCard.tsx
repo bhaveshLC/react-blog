@@ -18,13 +18,21 @@ const PostCard = ({ $id, title, featuredImage }: PostCardProps) => {
   }, [imageUrl]);
   return (
     <Link to={`/post/${$id}`}>
-      <div className="bg-white shadow-md rounded-lg overflow-hidden p-4">
-        <img src={imageUrl} alt={title} className="w-full h-48 object-cover" />
-        <div className="p-4">
-          <h2 className="text-xl font-bold text-gray-800">{title}</h2>
-        </div>
-        <div className="p-4">
-          <p className="text-gray-600">Read More</p>
+      <div className="transition-all duration-300 hover:scale-[1.02] hover:shadow-lg">
+        <div className="bg-white dark:bg-gray-800 shadow-md rounded-lg overflow-hidden p-4">
+          <img
+            src={imageUrl}
+            alt={title}
+            className="w-full h-48 object-cover"
+          />
+          <div className="p-4">
+            <h2 className="text-xl font-bold text-gray-800 dark:text-white">
+              {title.length > 28 ? title.substring(0, 28) + "..." : title}
+            </h2>
+          </div>
+          <div className="p-4">
+            <p className="font-semibold text-blue-600">Read More...</p>
+          </div>
         </div>
       </div>
     </Link>

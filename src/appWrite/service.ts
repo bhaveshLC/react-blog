@@ -18,6 +18,7 @@ export interface PostData {
 
 export interface UpdatePostData {
     title: string;
+    slug: string;
     content: string;
     featuredImage?: string;
     status: string;
@@ -38,6 +39,7 @@ class Service {
     }
 
     async createPost(data: PostData) {
+        console.log(data)
         try {
             return await this.databases.createDocument(
                 config.DatabaseId,
@@ -57,15 +59,17 @@ class Service {
     }
 
     async updatePost(
-        slug: string,
-        data: UpdatePostData
+        documentId: string,
+        data: any
     ) {
+        const { slug, ...otherData } = data;
+
         try {
             return await this.databases.updateDocument(
                 config.DatabaseId,
                 config.CollectionId,
-                slug,
-                data
+                documentId,
+                otherData
             );
         } catch (error) {
             console.error('Appwrite service :: updatePost :: error', error);
@@ -100,8 +104,27 @@ class Service {
     }
 
     async getPosts(
-        queries: string[] = [Query.equal('status', 'active')]
+        queries: string[] = [],
+        filter: { title: string, sortBy: string, limit: number, page: number }
     ) {
+        if (filter.title) {
+            queries.push(Query.search('title', filter.title));
+        }
+        if (filter.sortBy) {
+            if (filter.sortBy === 'latest') {
+                queries.push(Query.orderDesc('$createdAt'));
+            } else if (filter.sortBy === 'oldest') {
+                queries.push(Query.orderAsc('$createdAt'));
+            } else if (filter.sortBy === 'a-z') {
+                queries.push(Query.orderAsc('title'));
+            } else if (filter.sortBy === 'z-a') {
+                queries.push(Query.orderDesc('title'));
+            }
+        }
+        queries.push(Query.offset((filter.page - 1) * filter.limit));
+        if (filter.limit) {
+            queries.push(Query.limit(filter.limit));
+        }
         try {
             return await this.databases.listDocuments(
                 config.DatabaseId,
@@ -113,7 +136,17 @@ class Service {
             return false;
         }
     }
+    async getMyPosts(userId: string) {
+        const query = [Query.equal('userId', [userId])]
+        try {
+            return await this.databases.listDocuments(
+                config.DatabaseId, config.CollectionId,
+                query
+            )
+        } catch (error) {
 
+        }
+    }
     async uploadFile(file: File) {
         try {
             return await this.bucket.createFile(
@@ -126,7 +159,6 @@ class Service {
             return false;
         }
     }
-
     async deleteFile(fileId: string) {
         try {
             await this.bucket.deleteFile(config.BucketId, fileId);
@@ -138,9 +170,7 @@ class Service {
     }
 
     getFilePreview(fileId: string) {
-        const imageUrl = this.bucket.getFilePreview(config.BucketId, fileId);
-        console.log(imageUrl)
-        return imageUrl
+        return this.bucket.getFileView(config.BucketId, fileId);
     }
 }
 

@@ -17,15 +17,27 @@ import Login from "./Pages/Auth/Login/Login.tsx";
 import Signup from "./Pages/Auth/Sign-up/Signup.tsx";
 import Posts from "./Pages/Posts/Posts.tsx";
 import Addpost from "./Pages/Add_Post/Addpost.tsx";
+import Post from "./Pages/Posts/Post.tsx";
+import Edit_Post from "./Pages/Edit_Post/Edit_Post.tsx";
+import Profile from "./Pages/Profile/Profile.tsx";
 
+const theme = localStorage.getItem("theme");
+if (theme === "dark") {
+  document.body.classList.add("dark");
+} else {
+  document.body.classList.remove("dark");
+}
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path="/" element={<App />}>
         <Route index element={<Home />} />
         <Route path="home" element={<Home />} />
-        <Route path="posts" element={<Posts />} />
+        <Route path="my-posts" element={<Posts />} />
         <Route path="create-post" element={<Addpost />} />
+        <Route path="/post/:slug" element={<Post />} />
+        <Route path="/edit-post/:slug" element={<Edit_Post />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="*" element={<div>404 Not Found</div>} />
       </Route>
       ,<Route path="login" element={<Login />} />
