@@ -27,9 +27,6 @@ function App() {
       .finally(() => setLoading(false));
   }, []);
 
-  if (loading) {
-    return <Loader />;
-  }
   return (
     <div className="flex flex-col min-h-screen">
       {loading ? (

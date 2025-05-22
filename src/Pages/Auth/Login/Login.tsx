@@ -28,7 +28,7 @@ const Login = () => {
       }
     } catch (error: any) {
       console.error("Login failed:", error);
-      notify("error", error.error.message);
+      notify("error", error);
     }
   };
   return (
@@ -47,7 +47,7 @@ const Login = () => {
               {...register("email", {
                 required: "Email is required",
                 validate: {
-                  mathcPattern: (value) => {
+                  matchPattern: (value) => {
                     const pattern =
                       /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
                     return pattern.test(value) || "Invalid email address";
@@ -118,3 +118,5 @@ const Login = () => {
 };
 
 export default Login;
+// Hello Team,
+// Today, I implemented filters (search, sort, limit), pagination, and theming. I also used Redux to persist filter and page states.

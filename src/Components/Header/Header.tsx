@@ -2,7 +2,7 @@ import { Link, NavLink } from "react-router-dom";
 import LogoutBtn from "./LogoutBtn";
 import { useSelector } from "react-redux";
 import ThemeBtn from "../Custom/ToggleBtn";
-
+import "./header.css";
 const Header = () => {
   const isLoggedIn = useSelector((state: any) => state.auth.status);
 
@@ -30,7 +30,7 @@ const Header = () => {
       <nav>
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <Link
-            className="text-2xl font-bold dark:text-white hover:scale-105 transition"
+            className="text-2xl font-bold hover:scale-105 transition shimmer dark:text-white"
             to="/"
           >
             Blog

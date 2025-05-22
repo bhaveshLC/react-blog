@@ -48,11 +48,11 @@ const RTE = ({ name, control, label, defaultValue = "" }: any) => {
                 "alignleft aligncenter alignright alignjustify | " +
                 "bullist numlist outdent indent | removeformat | help",
               content_style: `
-        body {
-        background-color: ${isDarkMode ? "#1e293b" : "#f9fafb"};
-        color: ${isDarkMode ? "#f3f4f6" : "#1f2937"};
-        }
-        `,
+                  body {
+                    background-color: ${isDarkMode ? "slate" : "white"};
+                    color: ${isDarkMode ? "white" : "black"};
+                  }
+                `,
             }}
           />
         )}
